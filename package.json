@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.0.0",
     "mobx": "^6.6.2",
     "mobx-react-lite": "^3.4.0",
     "phosphor-react": "^1.4.1",
