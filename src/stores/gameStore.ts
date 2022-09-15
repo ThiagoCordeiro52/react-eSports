@@ -16,6 +16,7 @@ class GameStore {
   constructor() {
     makeObservable(this, {
       games: observable,
+      setGames: action,
     });
   }
 
