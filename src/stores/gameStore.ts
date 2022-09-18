@@ -22,7 +22,7 @@ class GameStore {
       useVoiceChannel: observable,
       setGames: action,
       setWeekDays: action,
-      setVoiceChannel: action,
+      setUseVoiceChannel: action,
     });
   }
 
@@ -34,7 +34,7 @@ class GameStore {
     this.weekdays = weekDaysList;
   };
 
-  setVoiceChannel = (value: boolean) => {
+  setUseVoiceChannel = (value: boolean) => {
     this.useVoiceChannel = value;
   };
 }

@@ -9,6 +9,7 @@ import { Check, GameController } from 'phosphor-react';
 
 import GameStore from '../stores/gameStore';
 import { observer } from 'mobx-react-lite';
+import axios from 'axios';
 
 export const CreateAdModal = observer(() => {
   const {
@@ -16,24 +17,42 @@ export const CreateAdModal = observer(() => {
     setGames,
     weekdays,
     setWeekDays,
-    setVoiceChannel,
+    setUseVoiceChannel,
     useVoiceChannel,
   } = useContext(GameStore);
 
   useEffect(() => {
-    fetch('http://localhost:3333/games')
-      .then((response) => response.json())
-      .then((data) => setGames(data));
+    axios('http://localhost:3333/games').then((response) =>
+      setGames(response.data)
+    );
   }, []);
 
-  function handleCreateAd(event: FormEvent) {
+  async function handleCreateAd(event: FormEvent) {
     event.preventDefault();
 
     const formData = new FormData(event.target as HTMLFormElement);
-
     const data = Object.fromEntries(formData);
 
-    console.log(data);
+    if (!data.name) {
+      alert('aa');
+      return;
+    }
+
+    try {
+      await axios.post(`http://localhost:3333/games/${data.game}/ads`, {
+        name: data.name,
+        yearsPlaying: Number(data.yearsPlaying),
+        discord: data.discord,
+        weekDays: weekdays.map(Number),
+        hourStart: data.hourStart,
+        hourEnd: data.hourEnd,
+        useVoiceChannel: useVoiceChannel,
+      });
+      alert('Anúncio criado com sucesso');
+    } catch (err) {
+      console.log(err);
+      alert('Erro ao criar o anúncio');
+    }
   }
 
   return (
@@ -192,7 +211,7 @@ export const CreateAdModal = observer(() => {
                 if (checked === true) {
                   setUseVoiceChannel(true);
                 } else {
-                  setVoiceChannel(false);
+                  setUseVoiceChannel(false);
                 }
               }}
               className="w-6 h-6 p-1 rounded bg-zinc-900"
