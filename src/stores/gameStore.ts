@@ -12,16 +12,23 @@ interface Game {
 
 class GameStore {
   games: Game[] = [];
+  weekdays: string[] = [];
 
   constructor() {
     makeObservable(this, {
       games: observable,
+      weekdays: observable,
       setGames: action,
+      setWeekDays: action,
     });
   }
 
   setGames = (gameList: Game[]) => {
     this.games = gameList;
+  };
+
+  setWeekDays = (weekDaysList: string[]) => {
+    this.weekdays = weekDaysList;
   };
 }
 
