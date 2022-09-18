@@ -13,13 +13,16 @@ interface Game {
 class GameStore {
   games: Game[] = [];
   weekdays: string[] = [];
+  useVoiceChannel: boolean = false;
 
   constructor() {
     makeObservable(this, {
       games: observable,
       weekdays: observable,
+      useVoiceChannel: observable,
       setGames: action,
       setWeekDays: action,
+      setVoiceChannel: action,
     });
   }
 
@@ -29,6 +32,10 @@ class GameStore {
 
   setWeekDays = (weekDaysList: string[]) => {
     this.weekdays = weekDaysList;
+  };
+
+  setVoiceChannel = (value: boolean) => {
+    this.useVoiceChannel = value;
   };
 }
 
